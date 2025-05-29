@@ -7,11 +7,11 @@ import Nav from './Component/Nav/Nav';
 import Bubbles from './Component/Bubble/Bubble';
 import Login from './Pages/Auth/login';
 import { Toaster } from 'sonner';
-import Signup from './Pages/Auth/signup';
+import Register from './Pages/Auth/Register';
 
 const AppLayout = () => {
   const location = useLocation();
-  const isAuthPage = location.pathname === "/" || location.pathname === '/Login' || location.pathname === '/Signup';
+  const isAuthPage = location.pathname === "/" || location.pathname === '/Login' || location.pathname === '/Register';
 
   return (
     <>
@@ -21,7 +21,7 @@ const AppLayout = () => {
         <Route path='/' element={<Home />} />
         <Route path='/Resume' element={<Resume />} />
         <Route path='/Coverletter' element={<Coverletter />} />
-        <Route path='/Signup' element={<Signup />} />
+        <Route path='/Register' element={<Register />} />
         <Route path='/Login' element={<Login />} />
       </Routes>
       {!isAuthPage && <Bubbles />}

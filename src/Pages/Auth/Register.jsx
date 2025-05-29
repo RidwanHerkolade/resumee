@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import supabase from "../../Helper/supabaseClient";
 import { toast, Toaster } from "sonner";
-const Signup = () => {
+const Register = () => {
 const [loading, setLoading] = useState(false);
   const icons = [
     { id: 1, icon: <FacebookRoundedIcon /> },
@@ -212,5 +212,4 @@ const navigate = useNavigate()
     </>
   );
 };
-
-export default Signup;
+export default Register;
