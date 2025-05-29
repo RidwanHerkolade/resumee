@@ -6,9 +6,8 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import supabase from "../../Helper/supabaseClient";
+import supabase from "../../../Helper/supabaseClient";
 import { toast } from "sonner";
-// import {ThreeDots} from "react-spinner"
 
 const Login = () => {
   const icons = [

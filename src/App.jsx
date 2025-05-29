@@ -5,9 +5,9 @@ import Resume from './Pages/Resume/Resume';
 import Coverletter from './Pages/CoverLetter/Coverletter';
 import Nav from './Component/Nav/Nav';
 import Bubbles from './Component/Bubble/Bubble';
-import Login from './Pages/Auth/login';
 import { Toaster } from 'sonner';
 import Register from './Pages/Auth/Register';
+import Login from './Pages/Auth/Login/Login'
 
 const AppLayout = () => {
   const location = useLocation();
