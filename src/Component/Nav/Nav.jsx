@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import NightlightOutlinedIcon from '@mui/icons-material/NightlightOutlined';
+// import NightlightOutlinedIcon from '@mui/icons-material/NightlightOutlined';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
@@ -32,8 +32,8 @@ const Nav = () => {
               </Link>
             );
           })}
-          <div><ModeNightIcon/></div>
-           <div><DarkModeIcon className="text-cyan-100 text-[4rem]"/></div>
+          {/* <div><ModeNightIcon/></div> */}
+           {/* <div><DarkModeIcon className="text-cyan-100 text-[4rem]"/></div> */}
         </div>
         <div className="md:hidden">
           <MenuIcon onClick={() => setIsOpen(!isOpen)}/>

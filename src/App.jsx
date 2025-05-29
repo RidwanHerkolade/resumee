@@ -28,7 +28,6 @@ const AppLayout = () => {
     </>
   );
 };
-
 const App = () => {
   return (
     <BrowserRouter>

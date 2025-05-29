@@ -61,7 +61,7 @@ const navigate = useNavigate()
   return (
     <>
     <Toaster />
-      <div className="h-full px-4 py-[2rem] sm:px-8 flex justify-center items-center flex-col overflow-y-scroll">
+      <div className="sm:h-full  h-[100vh] md:h-[100vh] px-4 py-[2rem] sm:px-8 flex justify-center items-center flex-col overflow-y-scroll">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold">Hey, Hello</h2>
           <p className="text-gray-600">
