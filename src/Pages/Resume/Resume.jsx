@@ -21,7 +21,7 @@ const Resume = () => {
     });
   };
   return (
-    <div className="w-full h-[calc(100vh-4.3rem)]">
+    <div className="w-full h-[calc(100vh-4.6rem)]">
       {isLoading && (
         <div className="">
           <BeatLoaderOverLay className="" />

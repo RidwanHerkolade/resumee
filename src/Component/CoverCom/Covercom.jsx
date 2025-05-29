@@ -18,7 +18,7 @@ const Covercom = ({isInput, handleChange}) => {
             value={isInput[data.name]}
             required
             placeholder={data.placeholder}
-            className=" w-full md:w-[50%] font-[500] text-[1.0rem] sm:text-[1.0rem] md:text-[1.1rem] lg:text-[1.2rem] px-[1rem] py-[0.5rem] outline-0 border-blue-500 rounded-[0.4rem] border-2 my-[0.5rem]"
+            className=" w-full md:w-[50%] font-[500] text-[0.95rem] sm:text-[0.98rem] md:text-[1.05rem] lg:text-[1.1rem] px-[1rem] py-[0.5rem] outline-0 border-blue-500 rounded-[0.4rem] border-2 my-[0.5rem]"
           />
         );
       })}
@@ -28,7 +28,7 @@ const Covercom = ({isInput, handleChange}) => {
         name="textArea"
         onChange={handleChange}
         value={isInput.textArea}
-        className=" w-full md:w-[50%] font-[500] text-[1.0rem] sm:text-[1.0rem] md:text-[1.1rem] lg:text-[1.2rem] px-[1rem] md:px-[2rem] py-[0.8rem] outline-0 border-blue-500 rounded-[0.4rem] border-2 my-[0.5rem] resize-none"
+        className=" w-full md:w-[50%] font-[500] text-[0.95rem] sm:text-[0.98rem] md:text-[1.05rem] lg:text-[1.1rem] px-[1rem] md:px-[2rem] py-[0.8rem] outline-0 border-blue-500 rounded-[0.4rem] border-2 my-[0.5rem] resize-none"
       ></textarea>
       <div className="w-full md:w-[50%] my-[1.5rem]">
       <button

@@ -54,6 +54,22 @@ const Login = () => {
   }
 };
 
+// SIGN IN WITH GOOGLE
+ const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/Resume`, // change to your desired route
+      },
+    });
+    if (error) {
+      console.error('Google sign-in error:', error.message);
+      toast.error("google sign in error")
+    } else {
+      console.log('Redirecting to Google...')
+    }
+  };
+
   return (
     <div className="h-[100vh] px-4 sm:px-8 flex justify-center items-center flex-col">
       <div className="text-center mb-6">
@@ -164,7 +180,7 @@ const Login = () => {
         </div>
         <button
           type="button"
-          //   onClick={handleGoogleSignIn}
+            onClick={handleGoogleLogin}
           className="w-full border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-md flex items-center justify-center gap-2 transition"
         >
           <GoogleIcon />

@@ -39,10 +39,10 @@ const ResumeCom = ({ isInput, handleChange, setIsOutput, isLoading, setIsLoading
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col w-full ">
-        <h1 className="text-[2rem] font-[600] flex justify-center my-[0.3rem]">
+        <h1 className="text-[1.6rem] font-[600] flex justify-center my-[0.2rem]">
           Get started
         </h1>
-        <div className="w-full my-[0.3rem]">
+        <div className="w-full my-[0.2rem]">
           <input
             type="text"
             placeholder="Full Name"
@@ -50,12 +50,12 @@ const ResumeCom = ({ isInput, handleChange, setIsOutput, isLoading, setIsLoading
             required
             value={isInput.fullName}
             onChange={handleChange}
-            className="w-full font-[500] text-[1.0rem] sm:text-[1.0rem] md:text-[1.1rem] lg:text-[1.2rem] px-[1rem] py-[0.5rem] outline-0 border-blue-600 rounded-[0.4rem] border-2"
+            className="w-full font-[500] text-[0.95rem] sm:text-[0.98rem] md:text-[1.05rem] lg:text-[1.1rem] px-[1rem] py-[0.5rem] outline-0 border-blue-600 rounded-[0.4rem] border-2"
           />
         </div>
         {textData.map((data) => {
           return (
-            <div className="w-full my-[0.3rem]">
+            <div className="w-full my-[0.2rem]">
               <textarea
                 type="text"
                 name={data.name}
@@ -63,7 +63,7 @@ const ResumeCom = ({ isInput, handleChange, setIsOutput, isLoading, setIsLoading
                 required
                 value={isInput[data.name]}
                 placeholder={data.placeholder}
-                className="w-full text-[1rem] sm:text-[1rem] md:text-[1.1rem] lg:text-[1.2rem] font-[500] px-[1rem] outline-0 py-[0.5rem] resize-none border-blue-600 rounded-[0.4rem] border-2"
+                className="w-full text-[0.95rem] sm:text-[0.98rem] md:text-[1.05rem] lg:text-[1.1rem] font-[500] px-[1rem] outline-0 py-[0.5rem] resize-none border-blue-600 rounded-[0.4rem] border-2"
               ></textarea>
             </div>
           );

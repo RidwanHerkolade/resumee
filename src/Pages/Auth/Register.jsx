@@ -58,6 +58,26 @@ const navigate = useNavigate()
       setLoading(false);
     }
   };
+
+  // SIGN IN WITH GOOGLE
+ const handleGoogleLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/Resume`, // change to your desired route
+      },
+
+    });
+
+    if (error) {
+      console.error('Google sign-in error:', error.message);
+      toast.error("google sign in error")
+    } else {
+      console.log('Redirecting to Google...');
+      toast.success("user successfully log in")
+      navigate("/Login")
+    }
+  };
   return (
     <>
     <Toaster />
@@ -193,7 +213,7 @@ const navigate = useNavigate()
 
           <button
             type="button"
-            //   onClick={handleGoogleSignIn}
+              onClick={handleGoogleLogin}
             className="w-full border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-md flex items-center justify-center gap-2 transition"
           >
             <GoogleIcon />
