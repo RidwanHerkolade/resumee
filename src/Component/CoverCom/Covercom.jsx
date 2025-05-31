@@ -3,9 +3,21 @@ const inputs = [
   { id: 1, placeholder: "Job title", name: 'title'  },
   { id: 2, placeholder: "Company Name",name: 'companyName' },
 ];
-const Covercom = ({isInput, handleChange}) => {
+const Covercom = ({isInput, handleChange, isLoading, setIsLoading}) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsLoading(false)
+    // try{
+    //   const prompt = `
+    //     Generate a professional cover letter based on the following
+    //     Title: ${isInput.title}
+    //     CompanyName: ${isInput.companyName}
+    //     Experience: ${isInput.textArea}
+    //   `
+    // }
+  }
   return (
-    <form className="flex justify-center items-center flex-col h-full w-full px-[1.5rem]">
+    <form className="flex justify-center items-center flex-col h-full w-full px-[1.5rem]" onSubmit={handleSubmit}>
       <h2 className="text-[1.5rem] font-[600] flex justify-center my-[1rem]">
         Cover Letter Generator
       </h2>
@@ -32,7 +44,7 @@ const Covercom = ({isInput, handleChange}) => {
       ></textarea>
       <div className="w-full md:w-[50%] my-[1.5rem]">
       <button
-        type="button"
+        type="submit"
         className="bg-blue-500 px-[2.5rem] py-[0.8rem] text-white font-[500] rounded-[0.5rem] hover:bg-blue-500 hover:text-white "
       >
         Generate

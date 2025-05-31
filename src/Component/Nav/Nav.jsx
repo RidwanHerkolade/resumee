@@ -12,7 +12,6 @@ const Nav = () => {
     { id: 1, title: "home", href: "/" },
     { id: 2, title: "Resume", href: "/Resume" },
     { id: 3, title: "Cover Letter", href: "/Coverletter" },
-    {id: 4, title: "Log out",}
   ];
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
@@ -22,8 +21,8 @@ const Nav = () => {
      if(error) throw error;
      toast.error("user logged out")
      navigate("/Login")
-
   }
+
   return (
     <div className="flex items-center justify-between">
       <nav className="flex justify-between items-center w-full px-[1.5rem] py-[1rem] ">
@@ -62,6 +61,7 @@ const Nav = () => {
               </Link>
             );
           })}
+          <div className="text-[1rem] text-white font-[600] rounded-[0.5rem] bg-blue-600 px-[1.5rem] py-[0.6rem] ml-[1rem] cursor-pointer hover:bg-blue-700" onClick={signOut}>Sign out</div>
         </div>)}
       </nav>
     </div>

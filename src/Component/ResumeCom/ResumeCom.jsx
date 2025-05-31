@@ -8,7 +8,6 @@ const ResumeCom = ({ isInput, handleChange, setIsOutput, isLoading, setIsLoading
     { id: 3, placeholder: "Education", name: "education" },
     { id: 4, placeholder: "Skills", name: "skills" },
   ];
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
