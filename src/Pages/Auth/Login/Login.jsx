@@ -6,9 +6,11 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import supabase from "../../../Helper/supabaseClient";
 import { toast } from "sonner";
-
+import { auth, googleProvider } from "../../../../Firebase/config";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+// import { auth, googleProvider } from "../../../firebase/config";
+// import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 const Login = () => {
   const icons = [
     { id: 1, icon: <FacebookRoundedIcon /> },
@@ -16,65 +18,51 @@ const Login = () => {
     { id: 3, icon: <GitHubIcon /> },
     { id: 4, icon: <GoogleIcon /> },
   ];
-//   REACT HOOK FORM VALIDATION
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
-// ONSUBMIT HANDLER
+
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // EMAIL & PASSWORD LOGIN
   const onSubmit = async ({ email, password }) => {
-  setLoading(true);
-  try {
-    const { data: userData, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      if (error.message.toLowerCase().includes("invalid login credentials")) {
-        toast.error("Wrong email or password.");
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Login successful!");
+      navigate("/Resume");
+    } catch (error) {
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Invalid email or password");
       } else {
-        toast.error(`Login failed: ${error.message}`);
+        toast.error("Login failed: " + error.message);
       }
-      return;
+    } finally {
+      setLoading(false);
     }
-
-    toast.success("Login successful!");
-    console.log("Logged in user:", userData);
-    navigate("/Resume");
-  } catch (error) {
-    toast.error("Unexpected error: " + error.message);
-    console.error("Login error:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-// SIGN IN WITH GOOGLE
- const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/Resume`, // change to your desired route
-      },
-    });
-    if (error) {
-      console.error('Google sign-in error:', error.message);
-      toast.error("google sign in error")
-    } else {
-      console.log('Redirecting to Google...')
+  };
+  // GOOGLE LOGIN
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast.success("Logged in with Google!");
+      navigate("/Resume");
+    } catch (error) {
+      console.error("Google sign-in error:", error.message);
+      toast.error("Google sign-in error");
     }
   };
 
   return (
-    <div className="h-[100vh] px-4 sm:px-8 flex justify-center items-center flex-col">
+    <div className="h-screen px-4 sm:px-8 flex justify-center items-center flex-col">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold">Hey, Hello 👋</h2>
         <p className="text-gray-600">
-          Enter the information you entered while registering !!
+          Enter the information you used while registering!
         </p>
       </div>
 
@@ -105,8 +93,6 @@ const Login = () => {
             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
           )}
         </div>
-
-        {/* Password */}
         <div>
           <label htmlFor="password" className="block font-medium mb-1">
             Password
@@ -151,7 +137,8 @@ const Login = () => {
         {errors.acceptterms && (
           <p className="text-red-500 text-sm">{errors.acceptterms.message}</p>
         )}
-        {/* Submit Button */}
+
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
@@ -159,7 +146,7 @@ const Login = () => {
         >
           {loading ? (
             <div className="flex justify-center items-center">
-              <BeatLoader height="20" color="#fff" visible={true} />
+              <BeatLoader color="#fff" size={10} />
             </div>
           ) : (
             "Sign In"
@@ -177,17 +164,20 @@ const Login = () => {
             </div>
           ))}
         </div>
+
+        {/* Google Sign-In */}
         <button
           type="button"
-            onClick={handleGoogleLogin}
+          onClick={handleGoogleLogin}
           className="w-full border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-md flex items-center justify-center gap-2 transition"
         >
           <GoogleIcon />
           Sign in with Google
         </button>
-        {/* Link to Login */}
+
+        {/* Register Link */}
         <p className="text-center text-sm mt-4 text-gray-700">
-          Don't have an account
+          Don't have an account?{" "}
           <Link
             to="/Register"
             className="text-blue-600 font-medium hover:underline"

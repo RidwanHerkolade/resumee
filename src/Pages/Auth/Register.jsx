@@ -6,10 +6,15 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
-import supabase from "../../Helper/supabaseClient";
 import { toast, Toaster } from "sonner";
+import { auth, googleProvider } from "../../../Firebase/config";
+// import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+// import { auth, googleProvider } from "../../../firebase/config";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
+
 const Register = () => {
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const icons = [
     { id: 1, icon: <FacebookRoundedIcon /> },
     { id: 2, icon: <TwitterIcon /> },
@@ -23,70 +28,48 @@ const [loading, setLoading] = useState(false);
     formState: { errors },
   } = useForm();
 
-const navigate = useNavigate()
-  const onSubmit = async (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit = async ({ fullName, email, password }) => {
     setLoading(true);
-    const { email, password, fullName } = data;
     try {
-      const { data: user, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-          },
-        },
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, {
+        displayName: fullName,
       });
-      if (error) {
-      if (error.message.includes("User already registered")) {
+
+      toast.success("Signup successful!");
+      navigate("/Login");
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
         toast.error("This email is already registered. Try logging in.");
       } else {
-        toast.error(`Signup failed: ${error.message}`);
+        toast.error("Signup failed: " + error.message);
       }
-      return;
-    }
-    toast.success("Signup successful! Check your email.");
-    console.log("User data:", user);
-    navigate("/Login")
-    
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      toast.error("Unexpected error: " + error.message);
-      
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  // SIGN IN WITH GOOGLE
- const handleGoogleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/Resume`, // change to your desired route
-      },
-
-    });
-
-    if (error) {
-      console.error('Google sign-in error:', error.message);
-      toast.error("google sign in error")
-    } else {
-      console.log('Redirecting to Google...');
-      toast.success("user successfully log in")
-      navigate("/Login")
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast.success("Signed up with Google!");
+      navigate("/Resume");
+    } catch (error) {
+      console.error("Google sign-in error:", error.message);
+      toast.error("Google sign-in error");
     }
   };
+
   return (
     <>
-    <Toaster />
-      <div className="sm:h-full  h-[100vh] md:h-[100vh] px-4 py-[2rem] sm:px-8 flex justify-center items-center flex-col overflow-y-scroll">
+      <Toaster />
+      <div className="sm:h-full h-[100vh] md:h-[100vh] px-4 py-[2rem] sm:px-8 flex justify-center items-center flex-col overflow-y-scroll">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold">Hey, Hello</h2>
-          <p className="text-gray-600">
-            Create account to start using resumeee
-          </p>
+          <p className="text-gray-600">Create account to start using resumeee</p>
         </div>
 
         <form
@@ -106,9 +89,7 @@ const navigate = useNavigate()
               {...register("fullName", { required: "Enter your full name" })}
             />
             {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.fullName.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
             )}
           </div>
 
@@ -132,9 +113,7 @@ const navigate = useNavigate()
               })}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
             )}
           </div>
 
@@ -161,9 +140,7 @@ const navigate = useNavigate()
               })}
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
             )}
           </div>
 
@@ -184,7 +161,7 @@ const navigate = useNavigate()
             <p className="text-red-500 text-sm">{errors.acceptterms.message}</p>
           )}
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
@@ -211,9 +188,10 @@ const navigate = useNavigate()
             ))}
           </div>
 
+          {/* Google Sign-up */}
           <button
             type="button"
-              onClick={handleGoogleLogin}
+            onClick={handleGoogleLogin}
             className="w-full border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-md flex items-center justify-center gap-2 transition"
           >
             <GoogleIcon />
@@ -232,4 +210,5 @@ const navigate = useNavigate()
     </>
   );
 };
+
 export default Register;
