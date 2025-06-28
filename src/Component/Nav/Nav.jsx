@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { toast } from "sonner";
 import { signOut } from "firebase/auth";
-import { auth } from "../../../firebase/config";
+import { auth } from "../../../Firebase/config";
 const Nav = () => {
   const navLinks = [
     { id: 1, title: "home", href: "/" },
